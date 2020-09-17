@@ -1,0 +1,118 @@
+.sidebarbox{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  transform: translateX(-518px);
+  transition: 0.7s ease;
+  .sidebar{
+    display: flex;
+    height: 100%;
+    .toolbar, .tasklist{
+      background-color: $dark;
+      height: 100%;
+    }
+    .toolbar{
+      border-left:2px solid $secondary-state;
+
+      width:82px;
+      ul{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        li{
+          margin: 27px auto;
+        }
+      } 
+    }
+    .tasklist{
+      padding: 10px 33px;
+      width: 452px;
+      p{
+        padding-bottom: 10px;
+        color: $light;
+      }
+      hr{
+        border-color: $secondary-lighter;
+      }
+      ul{
+        padding-left: 0;
+        li{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: $secondary-state;
+          border-top: 1px solid $dark;
+          border-bottom: 1px solid $dark;
+          .fa-check-circle, .fa-ellipsis-h, .fa-play-circle{
+            padding: 15px 10px;
+          }
+          div{
+            display: flex;
+          }
+          p{
+            margin: 9px;
+          }
+          .fa-ellipsis-h{
+            text-align: right;
+          }
+        }
+      }
+      .totaltitle{
+        padding-bottom: 0px;
+        color: $secondary-lighter;
+      }
+      .total{
+        display: flex;
+        justify-content: center;
+        // align-items: center;
+        background-color: $secondary-dark;
+        height: 100px;
+        .tomatos, .weekly{
+          align-self:center;
+          width:100%;
+          text-align: center;
+          p{
+            color: $primary;
+          }
+        }
+        .tomatos{
+          p{
+            border-right: 1px solid $secondary-lighter;
+          }
+        }
+      }
+      .chart{
+        background-color: $secondary-dark;
+        height: 346px;
+        margin-bottom: 62px;
+      }
+      .graphBtn{
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    .fa-plus-circle, .fa-bars, .fa-chart-bar, .fa-music, .fa-check-circle, .fa-ellipsis-h, .fa-play-circle{
+      color: $light;
+    }
+  }
+}
+
+// .bounce-enter-active{
+//   animation: bounce-in .5s
+// }
+// .bounce-leave-active{
+//   animation: bounce-in .5s
+// }
+
+// @keyframes bounce-in {
+//   0% {
+//     transform: translateX(-518px);
+//   }
+//   100% {
+//     transform: translateX(0);
+//   }
+// }
+.open .sidebarbox {
+  transform: translateX(0px);
+}

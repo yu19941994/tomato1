@@ -1,0 +1,27 @@
+.tomatoIcon{
+  transform: translateX(0px);
+  transition: 0.7s ease;
+  position: fixed;
+  background-color: white;
+  bottom: 25px;
+  left: 35px;
+  width: 90px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  div{
+    display: flex;
+    img{
+      width: 45px;
+    }
+    .fa-arrow-right, .fa-arrow-left{
+      align-self: center;
+      padding-left: 8px;
+    }
+  }
+  
+}
+
+.open .tomatoIcon{
+  transform: translateX(518px);
+  transition: 0.7s ease;
+}
