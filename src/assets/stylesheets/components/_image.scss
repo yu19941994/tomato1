@@ -8,6 +8,7 @@
   width: 90px;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
+  z-index: 200;
   div{
     display: flex;
     img{
@@ -25,3 +26,14 @@
   transform: translateX(518px);
   transition: 0.7s ease;
 }
+
+.tomatoCount{
+  padding-bottom: 25px;
+  .tomatoSingle{
+    width: 20px;
+    transform: rotate(35deg);
+    padding: 5px 10px;
+  }
+}
+
+

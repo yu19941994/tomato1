@@ -1,64 +1,82 @@
 <template>
   <div class="home">
     <div class="wrap" :class="{'open': isOpen}">
-      <div class="container">
-        <h1 class="font-h2">My First Task</h1>
-        <div class="count">
-          <div class="clock">
-            <svg height="300" weight="300">
-              <circle
-                class="bg"
-                cx="150"
-                cy="150"
-                r="125"
-                stroke="#ACACAC"
-                stroke-width="50"
-                fill="#eaeaea"
-              />
-              <circle
-                class="loading"
-                cx="150"
-                cy="150"
-                r="125"
-                stroke="#ea5548"
-                stroke-width="50"
-                fill="#eaeaea"
-                :stroke-dasharray="circumference"
-                :stroke-dashoffset="progress"
-              />
-            </svg>
-            <p class="font font-h1"><span>{{ minutes }}</span>:<span>{{seconds}}</span></p>
-          </div>
-        </div>
-        <div class="func-btn">
-          <div class="circlebtn circlebtn-white" @click="startClock">
-            <i class="fas fa-play"></i>
-          </div>
-          <div class="circlebtn circlebtn-white" @click="stopTimer">
-            <i class="fas fa-pause"></i>
-          </div>
-          <div class="circlebtn circlebtn-white" @click="resetTimer">
-            <i class="fas fa-undo-alt"></i>
-          </div>
-        </div>
-        <p class="font font-h5 subtitle">TASK COMPLETE</p>
-      </div>
       <!--Sidebar-->
       <div class="sidebarbox">
         <div class="sidebar">
           <div class="tasklist">
+             <!--addNew-->
+            <div class="addNew" v-if="menu === 'addNew'">
+              <p class="font font-h3">ADD NEW TASK</p>
+              <hr>
+              <p class="font font-h5 totaltitle">TASK TITLE</p>
+              <form>
+                <label for=""></label>
+                <input type="text" placeholder="My Second Task" v-model="newTodoTitle" @keyup.enter="addTodo">
+              </form>
+              <p class="font font-h5 totaltitle">ESTIMATE TOMATO</p>
+              <div class="tomatoCount">
+                <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+              </div>
+              <div class="btn btn-primary" @click="addTodo">ADD TASK</div>
+            </div>
             <!--list-->
             <div class="list" v-if="menu === 'list'">
               <p class="font font-h3">TASK LISTS</p>
               <hr>
-              <div class="badge badge-primary">DONE</div>
+              <div class="badge-group">
+                <div class="badge badge-secondary-light"
+                :class="{'active':visibility == 'todo'}"
+                @click.prevent="visibility = 'todo'">TODO</div>
+                <div class="badge badge-secondary-light"
+                :class="{'active':visibility == 'done'}"
+                @click.prevent="visibility = 'done'">DONE</div>
+              </div>
               <ul>
-                <li>
-                  <div>
-                    <i class="far fa-check-circle"></i> 
-                    <p class="font-h4">My First Task</p>
+                <li v-for="item in filterTodos" :key="item.id" @click="chosenTomato">
+                  <div class="listTitle">
+                    <div>
+                      <i class="far fa-check-circle"></i> 
+                      <p class="font font-h4">{{item.title}}</p>
+                    </div>
+                    <i class="fas fa-ellipsis-h" @click="editTodos(item)"></i>
                   </div>
-                  <i class="fas fa-ellipsis-h"></i>
+                  <div v-if="item.id == editingTodos.id">
+                    <div class="listContent">
+                    <p class="font font-h5 totaltitle">TASK TITLE</p>
+                    <form>
+                      <label for=""></label>
+                      <input type="text"
+                      v-model="editingTitle" @keyup.enter="saveTodos(item)">
+                    </form>
+                    <p class="font font-h5 totaltitle">ESTIMATE TOMATO</p>
+                    <div class="tomatoCount">
+                      <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                      <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                      <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                      <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                      <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                      <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                      <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                      <img src="../assets/stylesheets/image/noneTomato.png" alt="" class="tomatoSingle">
+                    </div>
+                    </div>
+                    <div class="listBtnGroup">
+                      <div class="btn btn-secondary-light" @click="removeTodos(item.id)">DELETE</div>
+                      <div class="btn btn-success-state" @click="doneTodos(item)">DONE</div>
+                      <div class="btn btn-primary" @click="saveTodos(item)">SAVE</div>
+                    </div>
+                  </div>
+                 
                 </li>
               </ul>
             </div>
@@ -89,18 +107,21 @@
               <hr>
               <ul>
                 <li>
-                  <div>
-                    <i class="far fa-check-circle"></i> 
-                    <p class="font-h4">Ring tone1</p>
+                  <div class="listTitle">
+                    <div>
+                      <i class="far fa-check-circle"></i> 
+                      <p class="font-h4">Ring tone1</p>
+                    </div>
+                    <i class="far fa-play-circle"></i>
                   </div>
-                  <i class="far fa-play-circle"></i>
+                  
                 </li>
               </ul>
             </div>
           </div>
           <div class="toolbar">
               <ul>
-                <li><i href="#" class="fas fa-plus-circle"></i></li>
+                <li><i href="#" class="fas fa-plus-circle" @click="menu = 'addNew'"></i></li>
                 <li><i href="#" class="fas fa-bars" @click="menu = 'list'"></i></li>
                 <li><i href="#" class="fas fa-chart-bar" @click="menu = 'graph'"></i></li>
                 <li><i href="#" class="fas fa-music"  @click="menu = 'music'"></i></li>
@@ -108,6 +129,53 @@
           </div>
         </div>
       </div>
+      <!-- container -->
+      <div class="container">
+        <div class="container-inside" v-for="item in todos" :key="item.id">
+          <h1 class="font-h2">{{item.title}}</h1>
+          <div class="count">
+            <div class="clock">
+              <svg height="300" weight="300">
+                <circle
+                  class="bg"
+                  cx="150"
+                  cy="150"
+                  r="125"
+                  stroke="#ACACAC"
+                  stroke-width="50"
+                  fill="#eaeaea"
+                />
+                <circle
+                  class="loading"
+                  cx="150"
+                  cy="150"
+                  r="125"
+                  stroke="#ea5548"
+                  stroke-width="50"
+                  fill="#eaeaea"
+                  :stroke-dasharray="circumference"
+                  :stroke-dashoffset="progress"
+                />
+              </svg>
+              <p class="font font-h1"><span>{{ minutes }}</span>:<span>{{seconds}}</span></p>
+            </div>
+          </div>
+          <div class="func-btn">
+            <div class="circlebtn circlebtn-white" @click="startClock">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="circlebtn circlebtn-white" @click="stopTimer">
+              <i class="fas fa-pause"></i>
+            </div>
+            <div class="circlebtn circlebtn-white" @click="resetTimer">
+              <i class="fas fa-undo-alt"></i>
+            </div>
+          </div>
+          <p class="font font-h5 subtitle">TASK COMPLETE</p>
+        </div>
+
+      </div>
+      
       <!--toggleButton-->
       <div class="tomatoIcon" @click="openSidebar">
         <div>
@@ -130,14 +198,20 @@ export default {
     return{
       isOpen: false,
       isStart: false,
-      targetTime: 25*60, //換成毫秒
+      targetTime: 25*60, //換成秒
       minutes:'',
       seconds:'',
       now:0,
       percentage: 100,
       timer: '',
       count: '',
-      menu: ''
+      menu: 'addTask',
+      todos: [],
+      newTodoTitle:'',
+      visibility: 'todo',
+      editingTodos: {},
+      editingTitle: '',
+      tomatoTodos: {}
     }
   },
   methods: {
@@ -150,14 +224,12 @@ export default {
         let seconds_left = (this.targetTime--)
         this.minutes = this.pad(parseInt(seconds_left / 60))
         this.seconds = this.pad(parseInt(seconds_left % 60))
-      }
-      
+      }  
     },
     pad (n) {
       //如果小於10，給它'0x'
       return (n < 10 ? '0' : '')+n
-    },
-    
+    },  
     startClock () {
       this.isStart =! this.isStart
       if(this.isStart == true){
@@ -182,8 +254,43 @@ export default {
           clearInterval(this.timer)
           this.percentage = 100
         }
-      }, this.seconds)
-      
+      }, this.seconds)  
+    },
+    addTodo () {
+      let value = this.newTodoTitle.trim() //裁減前後空白
+      if(!value){
+        return
+      }
+      let timestamp = Math.floor(Date.now()) //時間戳記當id
+      this.todos.push({
+        id: timestamp,
+        title: value,
+        completed: false,
+        tomatoCount: 1
+      })
+      this.newTodoTitle = ''
+    },
+    removeTodos (todo) {
+      let newIndex = this.todos.findIndex((item) => {
+        return todo.id === item.id
+      })
+      this.todos.splice(newIndex,1)
+    },
+    doneTodos (e) {
+      this.todos.completed = e.complated
+      e.completed = true
+    },
+    editTodos (e) {
+      this.editingTodos = e
+      this.editingTitle = e.title
+    },
+    saveTodos (item) {
+      item.title = this.editingTitle
+      this.editingTodos = {}
+    },
+    chosenTomato (e) {
+      this.tomatoTodos = e
+      // this.editingTitle = e.title
     }
 
   },
@@ -194,6 +301,26 @@ export default {
     },
     progress () {
       return this.circumference - this.circumference*this.percentage/100
+    },
+    filterTodos () {
+      if(this.visibility == 'todo'){
+        let newTodos = []
+        this.todos.forEach((item)=>{
+          if(!item.completed){
+            newTodos.push(item)
+          }
+        })
+        return newTodos
+      }else if(this.visibility == 'done'){
+        let newTodos = []
+        this.todos.forEach((item)=>{
+          if(item.completed){
+            newTodos.push(item)
+          }
+        })
+        return newTodos
+      }
+      return null
     }
   },
   created () {

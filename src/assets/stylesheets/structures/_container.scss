@@ -1,8 +1,10 @@
 .container {
   padding-top: 100px;
+  display: flex;
   // position: absolute;
+  justify-content: center;
   // overflow: hidden;
-  align-items: center;
+  // align-items: center;
   width: 100%;
   // top: 0;  
   transition: 0.7s ease;

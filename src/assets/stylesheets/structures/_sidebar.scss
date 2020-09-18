@@ -5,6 +5,7 @@
   overflow: hidden;
   transform: translateX(-518px);
   transition: 0.7s ease;
+  z-index: 100;
   .sidebar{
     display: flex;
     height: 100%;
@@ -35,21 +36,44 @@
       hr{
         border-color: $secondary-lighter;
       }
+      .badge-group{
+        .badge{
+          margin-top: 25px;
+        }
+      }
       ul{
+        margin-top: 0px;
         padding-left: 0;
         li{
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
           background-color: $secondary-state;
           border-top: 1px solid $dark;
           border-bottom: 1px solid $dark;
+          .listTitle{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            p{
+              width: 360px;
+              border-bottom: 2px solid $dark
+            }
+            div{
+              display: flex;
+            }
+          }
+          .listContent,.listBtnGroup{
+            display:block;
+            padding-left: 40px;
+            width: 360px;
+          }
+          .listBtnGroup{
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 20px;
+          }
           .fa-check-circle, .fa-ellipsis-h, .fa-play-circle{
             padding: 15px 10px;
           }
-          div{
-            display: flex;
-          }
+          
           p{
             margin: 9px;
           }
@@ -58,9 +82,28 @@
           }
         }
       }
+      input{
+        border-radius: 5px;
+        height: 34px;
+        width: 100%;
+        // width: 450px;
+        &::placeholder{
+          font-size: $h5;
+          padding-left: 15px;
+          font-weight: bold;
+        }
+      }
       .totaltitle{
         padding-bottom: 0px;
         color: $secondary-lighter;
+      }
+      .addNew{
+        // display: flex;
+        // flex-direction: column;
+        .btn{
+          display: flex;
+          justify-content: center;
+        }
       }
       .total{
         display: flex;
@@ -98,21 +141,6 @@
   }
 }
 
-// .bounce-enter-active{
-//   animation: bounce-in .5s
-// }
-// .bounce-leave-active{
-//   animation: bounce-in .5s
-// }
-
-// @keyframes bounce-in {
-//   0% {
-//     transform: translateX(-518px);
-//   }
-//   100% {
-//     transform: translateX(0);
-//   }
-// }
 .open .sidebarbox {
   transform: translateX(0px);
 }

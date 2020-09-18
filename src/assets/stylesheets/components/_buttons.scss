@@ -1,5 +1,5 @@
 @mixin btn-constructer($str, $color, $background) {
-  .btn-#{$str}, .btn-outline-#{$str}, .badge-#{$str} {
+  .btn-#{$str}, .btn-outline-#{$str}, .badge-#{$str}, .btn-lg-#{$str} {
     color: $color;
     background-color: $background;
   }
@@ -15,7 +15,8 @@
 .btn,
 .circlebtn,
 .btn-outline,
-.badge {
+.badge,
+.ben-lg {
   display: inline-block;
   margin-bottom: 0;
   text-align: center;
@@ -24,10 +25,17 @@
   font-weight: bold;
 }
 
-.btn {
-  padding: 12px 36px;
+.btn, .btn-lg {
   border-radius: 30px;
   font-size: $h6;
+}
+
+.btn {
+  padding: 12px 36px;
+}
+
+.btn-lg{
+  padding: 12px 100px;
 }
 
 .badge{
@@ -35,6 +43,11 @@
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   font-size: $h6;
+  margin-right: 2px;
+}
+
+.active{
+  background-color: $primary !important;
 }
 
 .circlebtn {
@@ -54,3 +67,4 @@
 @include btn-constructer('oprimary', $primary, $dark);
 @include btn-constructer('secondary-light', $light, $secondary-light);
 @include btn-constructer('white', $dark, $white);
+@include btn-constructer('success-state', $success-state, $dark);
