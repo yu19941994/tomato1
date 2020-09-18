@@ -303,7 +303,7 @@ export default {
       return this.circumference - this.circumference*this.percentage/100
     },
     filterTodos () {
-      if(this.visibility == 'todo'){
+      if(this.visibility === 'todo'){
         let newTodos = []
         this.todos.forEach((item)=>{
           if(!item.completed){
@@ -311,7 +311,7 @@ export default {
           }
         })
         return newTodos
-      }else if(this.visibility == 'done'){
+      }else if(this.visibility === 'done'){
         let newTodos = []
         this.todos.forEach((item)=>{
           if(item.completed){
